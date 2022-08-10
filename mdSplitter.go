@@ -16,8 +16,19 @@ func create(p string) (*os.File, error) {
 }
 
 func main() {
+	content, err := os.ReadFile("input.md")
+	if err != nil {
+		log.Fatal(err);
+	}
 
-	i := 1
+	fmt.Printf("%s", content)
+
+	fmt.Println("Done!... Probably")
+}
+
+// for later use
+/* 
+i := 1
 	for i < 9 {
 		f, err := create(fmt.Sprintf("out/%d.md", i))
 	
@@ -37,6 +48,4 @@ func main() {
 
 		i++
 	}
-
-	fmt.Println("Done!... Probably")
-}
+*/
