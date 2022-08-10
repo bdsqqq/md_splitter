@@ -46,13 +46,7 @@ func main() {
 			return
 		}
 		defer f.Close()
-		_, err2 := f.WriteString(fmt.Sprintf(`
-			---
-			%s
-			Chapter: %d
-			---
-			## %s\n
-		`, frontMatterContent, i,  chapterContent))
+		_, err2 := f.WriteString(fmt.Sprintf("---%sChapter: %d\n---\n## %s\n", frontMatterContent, i,  chapterContent))
 		if err2 != nil {
 			log.Fatal(err2)
 			return
@@ -61,27 +55,3 @@ func main() {
 
 	fmt.Println("\nDone!... Probably")
 }
-
-// for later use
-/* 
-i := 1
-	for i < 9 {
-		f, err := create(fmt.Sprintf("out/%d.md", i))
-	
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-	
-		defer f.Close()
-	
-		_, err2 := f.WriteString(fmt.Sprintf("# %d\n", i))
-	
-		if err2 != nil {
-			log.Fatal(err2)
-			return
-		}
-
-		i++
-	}
-*/
