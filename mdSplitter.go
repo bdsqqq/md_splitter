@@ -17,7 +17,13 @@ func create(p string) (*os.File, error) {
 }
 
 func main() {
-	rawMD, err := os.ReadFile("input.md")
+	argsWithProg := os.Args
+	argsWithoutProg := argsWithProg[1:]
+	if len(argsWithoutProg) < 1 {
+		log.Fatal("Expected input file as argument")
+	}
+
+	rawMD, err := os.ReadFile(argsWithoutProg[0])
 	if err != nil {
 		log.Fatal(err);
 	}
