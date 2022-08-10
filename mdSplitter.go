@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // Thanks https://stackoverflow.com/a/59961623
@@ -16,12 +17,15 @@ func create(p string) (*os.File, error) {
 }
 
 func main() {
-	content, err := os.ReadFile("input.md")
+	rawMD, err := os.ReadFile("input.md")
 	if err != nil {
 		log.Fatal(err);
 	}
 
-	fmt.Printf("%s", content)
+	sliced := strings.SplitAfter(string(rawMD),"---")
+
+	frontMatter := sliced[0] + sliced[1] + "\n"
+	fmt.Printf("%s", frontMatter);
 
 	fmt.Println("Done!... Probably")
 }
