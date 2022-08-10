@@ -22,12 +22,44 @@ func main() {
 		log.Fatal(err);
 	}
 
-	sliced := strings.SplitAfter(string(rawMD),"---")
+	sliced := strings.Split(string(rawMD),"---")
 
-	frontMatter := sliced[0] + sliced[1] + "\n"
-	fmt.Printf("%s", frontMatter);
+	/* This is the 
+		```
+		Author: Igor bedesqui
+		Code: ib
+		``` 
+		from the frontmatter, so you'll need to add the --- before and after. I don't include them in case you wanna add more stuff manually (which I will 👺)
+	*/
+	frontMatterContent := sliced[1];
 
-	fmt.Println("Done!... Probably")
+	chapters := strings.Split(sliced[2], "##")
+	
+	for i, chapterContent:= range chapters {
+		if i == 0 {
+			continue;
+		}
+
+		f, err := create(fmt.Sprintf("out/%d.md", i))
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+		defer f.Close()
+		_, err2 := f.WriteString(fmt.Sprintf(`
+			---
+			%s
+			Chapter: %d
+			---
+			## %s\n
+		`, frontMatterContent, i,  chapterContent))
+		if err2 != nil {
+			log.Fatal(err2)
+			return
+		}
+	}
+
+	fmt.Println("\nDone!... Probably")
 }
 
 // for later use
